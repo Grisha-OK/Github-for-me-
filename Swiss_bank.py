@@ -14,28 +14,13 @@ data_base_extras = [{'surname': 'Петрасенко',                         
                       'account_number': 44573785
                      }]
 data_base = []             #Переменная не сохраняющая данные с прошлого запуска
-data_base_for_file = []    #Переменная сохраняющая данные с прошлого запуска программы
 
-with open("data_base_file.json", "r") as write_file:        #зкрывает фаил написи вне отступа
-    variable_with_read = write_file.read()                  #Читает строку из файла
-    data_base_for_file = json.loads(variable_with_read)     #Преобразует строку в python обект.
-    
-if read_from_file is None:
-    data_base = data_base_extras
-
-data_base.append(data_base_for_file)
-
-'''
-if в файле data_base_file.json есть какаето структура данных:
-    with open("data_base_file.json", "a") as write_file: #Открываем фаил в режиме записи
-        json.dump(data_base_extras, write_file)        #Конвертирует данные из переменной data в стороку json и записывает в фаил
-'''
-
-
-
-#with open("data_base_file.json", "r") as read_files: #закрывает фаил написи вне отступа
-    #Staging_database = read_files.read()                    #Читает строку из файла
-    #data_base = json.loads(Staging_database)                #Преобразует строку в python обект.
+try:
+    with open("data_base_file.json", "r") as write_file:        #зкрывает фаил написи вне отступа
+        variable_with_read = write_file.read()                  #Читает строку из файла
+        data_base = json.loads(variable_with_read)     #Преобразует строку в python обект.
+except FileNotFoundError:
+    print("Создаю новую базу")
 
 account_prefix = 4457
 
@@ -104,7 +89,7 @@ while menu_program != '6': #до тех пор пока выполняется �
                 
         
     elif menu_program == '6':
-        with open("data_base_file.json", "a") as write_file: #Открываем фаил в режиме записи
+        with open("data_base_file.json", "w") as write_file: #Открываем фаил в режиме записи
             json.dump(data_base, write_file)  #Конвертирует данные из переменной data в стороку json и записывает в фаил
 
         print ('Выход выполнен')
@@ -113,7 +98,6 @@ while menu_program != '6': #до тех пор пока выполняется �
     elif menu_program == '666':
         print("you entered debug mode")
         print(" ")
-        print(data_base_for_file)
         print(" ")
         print(data_base)
 
