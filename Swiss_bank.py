@@ -58,13 +58,16 @@ def add_new_user():  #добавить нового пользователя_4
     print(u)
 
 def delete_user(): #удолить пользователя_5
+    del_index = None
     print ('Ведите номер счета для удаления')
     f = input()
     for i in range(len(data_base)): #для каждой i в диапазоне, длиня (data_base), i = арядковому номеру
         q = data_base[i]            #приравневаем q к атдельно взятм элиментам, как в конструкции < for q in data_base: >
         if q['account_number'] == int(f):
-            del data_base[i]
-    
+            del_index = i
+    del data_base[del_index]
+    print("пользователь удолён")
+
 def exit_the_program(): #выход_6
     with open("data_base_file.json", "w") as write_file: #Открываем фаил в режиме записи
         json.dump(data_base, write_file)  #Конвертирует данные из переменной data в стороку json и записывает в фаил
