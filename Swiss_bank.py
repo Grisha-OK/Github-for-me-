@@ -65,8 +65,11 @@ def delete_user(): #удолить пользователя_5
         q = data_base[i]            #приравневаем q к атдельно взятм элиментам, как в конструкции < for q in data_base: >
         if q['account_number'] == int(f):
             del_index = i
-    del data_base[del_index]
-    print("пользователь удолён")
+    if del_index != None:   
+        del data_base[del_index]
+        print("Пользователь удолён")
+    else:
+        print("Пользователь не найден")
 
 def exit_the_program(): #выход_6
     with open("data_base_file.json", "w") as write_file: #Открываем фаил в режиме записи
