@@ -1,4 +1,7 @@
-
+'''
+Правила пользования: не запускать при созданной базе данных.
+Если фаил data_base_file.json создан, то скрипт Data_base_extras.py ламает фаил data_base_file.json
+'''
 
 import json    #Добавляем модуль json
 
