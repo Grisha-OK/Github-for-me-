@@ -61,13 +61,26 @@ def add_new_user():  #добавить нового пользователя_4
     print('Ведите дату рождения')
     d = input()
     print ('Пользователь создан')
-    u = (account_prefix * 10000 + random.randint(1, 9999))
+    
+    def create_acc_number():
+        return (account_prefix * 10000 + random.randint(1, 9999))  
+
+    def check_acc_number(number_ac): #рекурсия(рекурсия(рекурсия(...)))   
+        for account in data_base: #для каждой i в диапазоне, длина (data_base), i = порядковому номеру
+            if number_ac == account["account_number"]:
+                number_ac = create_acc_number()
+                check_acc_number(number_ac)
+    
+    number_ac = create_acc_number()
+    check_acc_number(number_ac)
+    
     data_base.append({'surname': s, #Добавляем элемент в список
-          'name': n,
-          'date_of_birth': d,                                                    
-          'account_balance': 0.00,
-          'account_number': u}) #Объединяем число 4457 с рандомным числом
-    print(u)
+            'name': n,
+            'date_of_birth': d,                                                    
+            'account_balance': 0.00,
+            'account_number': number_ac}) #Объединяем число 4457 с рандомным числом
+    print(number_ac)
+            
 
 def delete_user(): #удалить пользователя_5
     '''
