@@ -2,9 +2,6 @@ import random  #Добавляем модуль random
 import json    #Добавляем модуль json
 
 #пишет меню
-def menu_program_input():
-    return input()
-    #return (menu_program)
 
 def menu_show():
     '''
@@ -131,7 +128,6 @@ def user_edit():
             print('Фамилия:       ', q['surname'])
             print('Имя:           ', q['name'])
             print('Дата рождения: ', q['date_of_birth'])
-            print('Баланс счета:  ', q['account_balance'])
             print('Номер счета:   ', q['account_number'])
             print(" ")
 
@@ -144,9 +140,7 @@ def user_edit():
             input_change_default_date_of_birth = input((default_date_of_birth + " : ")) or  default_date_of_birth
             
             print(" ")
-            print("Сохринить изменение:")
-            print("Если да то ведите 'yes'")
-            print("Если нет то ведите 'no'")
+            print("Сохринить изменение?: yes/no")
             print(" ")
             print(input_change_surname)
             print(input_change_name)
