@@ -1,7 +1,22 @@
+
+# -*- coding: utf-8 -*-
+
+import time
 import random  #Добавляем модуль random
 import json    #Добавляем модуль json
 
 #пишет меню
+def data_logging(type_of_transaction, account_number_for_logging, what_happened ,what_changed):
+    numeric = time.strftime("%d", time.localtime())
+    month = time.strftime("%m", time.localtime())
+    year = time.strftime("%Y", time.localtime())
+    hour = time.strftime("%H", time.localtime())
+    menute = time.strftime("%M", time.localtime())
+    calendar_date = str(year) + "-" + str(month)  + "-" + str(numeric) + " " + str(hour) + ":" + str(menute)
+    
+    log_stor = str(calendar_date) + " Операции: " + str(type_of_transaction) + " Номер счета: " + str(account_number_for_logging) + "," + " Что было: " + str(what_happened) + "," + " Что изменилось: " + str(what_changed) + ".  "
+    with open("transaction.log", "a", encoding='utf8') as write_file: #открывает фаил (transaction.log) только в пределах каструкции with open, в режиме бодавления "a", и помещяет содержимое а переменную(write_file)
+        write_file.write(log_stor) #.encode("utf-8"))
 
 def menu_show():
     '''
@@ -47,14 +62,19 @@ def conduct_an_operation_with_an_account():
     провести операцию со счетом 
     '''    
     print ('Ведите номер счета')
-    y = input() #пьросим ползователя вести номер счета
+    account_number_input = input() #просим ползователя вести номер счета
     print ('Ведите сумму')
-    x = input() #просим пользователя вести сумму
-    for q in data_base: #перебрать элементы списка data_base, q = один из элементов списка
-        if q['account_number'] == int(y): #роверяем номер счета ведёный в консоль
-            q['account_balance'] = q['account_balance'] + float(x) #выполняем математическую операцыю
-            print ('Операцыя выполнена')
+    account_balance_input = input() #просим пользователя вести сумму
+    account_balance = ""
+
+    for q in data_base: #перебрать элементы списка data_base, q = один из элементов списка     
+        if q['account_number'] == int(account_number_input): #роверяем номер счета ведёный в консоль 
+            account_balance = str(q['account_balance'])
+            q['account_balance'] = q['account_balance'] + float(account_balance_input) #выполняем математическую операцыю
+            print ('Операцыя выполнена')                                                                         
     print(" ")
+    
+    data_logging("Монепуляцыя со счотом", account_number_input, account_balance , account_balance_input)
 
 def add_new_user():
     '''
@@ -87,7 +107,8 @@ def add_new_user():
             'account_number': number_ac}) #Объединяем число 4457 с рандомным числом
     print(number_ac)
     print(" ")
-            
+    add_message = "Добавлен пользователь: Фамилия(" + s + ") Имя(" + n + ") Дата рождения(" + d + ") Баланс(" + str(0.00) + ")"
+    data_logging("Добавление пользователя", number_ac, "---", add_message)
 
 def delete_user():
     '''
@@ -100,12 +121,19 @@ def delete_user():
         q = data_base[i]            #приравневаем q к отдельно взятым элементам, как в конструкции < for q in data_base: >
         if q['account_number'] == int(f):
             del_index = i
+            s = str(q['surname'])
+            n = str(q['name'])
+            d = str(q['date_of_birth'])
+            a = str(q['account_balance'])
+            
     if del_index != None:   
         del data_base[del_index]
         print("Пользователь удалён")
     else:
         print("Пользователь не найден")
     print(" ")
+    del_message = "Удолён пользователь: Фамилия(" + s + ") Имя(" + n + ") Дата рождения(" + d + ") Баланс(" + a + ")"
+    data_logging("Удоление пользователя", f, del_message, "---")
 
 def exit_the_program():
     '''
@@ -131,6 +159,10 @@ def user_edit():
             print('Номер счета:   ', q['account_number'])
             print(" ")
 
+            s = str(q['surname'])
+            n = str(q['name'])
+            d = str(q['date_of_birth'])
+
             default_surname = (q['surname'])
             default_name = (q['name'])
             default_date_of_birth = (q['date_of_birth'])
@@ -154,6 +186,9 @@ def user_edit():
                         q['surname'] = input_change_surname
                         q['name'] = input_change_name
                         q['default_date_of_birth'] = input_change_default_date_of_birth
+    before_edit_message = s + " " + n + " " + d
+    after_edit_message = input_change_surname + " " + input_change_name + " " + input_change_default_date_of_birth
+    data_logging("Редактирование пользоватля", account_number_for_editing, before_edit_message, after_edit_message)
     print(" ")
 
 def debugger(): #отлодчик_666
@@ -180,24 +215,25 @@ account_prefix = 4457
 menu_show()
 
 menu_program = ''
-while True: #до тех пор пока выполняется условие (в данном случаи menu_program НЕ РАВНО 7)
+
+while True: #до тех пор пока выполняется условие 
     menu_program = input()
     
     if menu_program == '1':    #если выполняется условие...
         specific_user_output() #то вызывается функция вывода конкретного пользователя
         
     elif menu_program == '2':  #иначе, если не одно из условий if или (elif) не выполнено...
-         all_user_output()     #то вызывается функция вывода всех пользователей
-         
+        all_user_output()     #то вызывается функция вывода всех пользователей
+        
     elif menu_program == '3':  #иначе, если не одно из условий if или (elif) не выполнено...
         conduct_an_operation_with_an_account() #то вызывается функция проведения операции со счетом 
 
     elif menu_program == '4':  #иначе, если не одно из условий if или (elif) не выполнено...
-       add_new_user()          #то вызывается функция добавления нового пользователя
+        add_new_user()          #то вызывается функция добавления нового пользователя
 
     elif menu_program == '5':  #иначе, если не одно из условий if или (elif) не выполнено...
         delete_user()          #то вызывается функция удоления пользователя
-  
+
     elif menu_program == '6':  #иначе, если не одно из условий if или (elif) не выполнено...
         user_edit()         #то вызывается функцию редактирование пользователя
     
@@ -206,6 +242,6 @@ while True: #до тех пор пока выполняется условие (
 
     elif menu_program == '666':#иначе, если не одно из условий if или (elif) не выполнено...
         debugger()             #то вызывается за резервирования функция под отладку.
-    
+
     else:
         menu_show()
