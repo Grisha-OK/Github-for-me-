@@ -1,20 +1,12 @@
 
-# -*- coding: utf-8 -*-
-
 import time
 import random  #Добавляем модуль random
 import json    #Добавляем модуль json
 
 #пишет меню
 def data_logging(type_of_transaction, account_number_for_logging, what_happened ,what_changed):
-    numeric = time.strftime("%d", time.localtime())
-    month = time.strftime("%m", time.localtime())
-    year = time.strftime("%Y", time.localtime())
-    hour = time.strftime("%H", time.localtime())
-    menute = time.strftime("%M", time.localtime())
-    calendar_date = str(year) + "-" + str(month)  + "-" + str(numeric) + " " + str(hour) + ":" + str(menute)
-    
-    log_stor = str(calendar_date) + " Операции: " + str(type_of_transaction) + " Номер счета: " + str(account_number_for_logging) + "," + " Что было: " + str(what_happened) + "," + " Что изменилось: " + str(what_changed) + ".  "
+    calendar_date = time.strftime("%Y-%m-%d %H:%M")
+    log_stor = (f"{calendar_date} Тип операции: {type_of_transaction} Номер счета: {account_number_for_logging}, Что было: {what_happened}, Что изменилось: {what_changed}.  ")
     with open("transaction.log", "a", encoding='utf8') as write_file: #открывает фаил (transaction.log) только в пределах каструкции with open, в режиме бодавления "a", и помещяет содержимое а переменную(write_file)
         write_file.write(log_stor) #.encode("utf-8"))
 
@@ -74,7 +66,12 @@ def conduct_an_operation_with_an_account():
             print ('Операцыя выполнена')                                                                         
     print(" ")
     
-    data_logging("Монепуляцыя со счотом", account_number_input, account_balance , account_balance_input)
+    if float(account_balance_input) >= 0:
+        D_C_message = "Дебит("
+    else:
+        D_C_message = "Кредит("
+    account_balance_input_D_C = D_C_message + account_balance_input + ")"
+    data_logging("Манипуляция со счётом", account_number_input, account_balance , account_balance_input_D_C)
 
 def add_new_user():
     '''
@@ -132,7 +129,7 @@ def delete_user():
     else:
         print("Пользователь не найден")
     print(" ")
-    del_message = "Удолён пользователь: Фамилия(" + s + ") Имя(" + n + ") Дата рождения(" + d + ") Баланс(" + a + ")"
+    del_message = "Удалён пользователь: Фамилия(" + s + ") Имя(" + n + ") Дата рождения(" + d + ") Баланс(" + a + ")"
     data_logging("Удоление пользователя", f, del_message, "---")
 
 def exit_the_program():
@@ -185,11 +182,12 @@ def user_edit():
                     if q['account_number'] == int(account_number_for_editing):
                         q['surname'] = input_change_surname
                         q['name'] = input_change_name
-                        q['default_date_of_birth'] = input_change_default_date_of_birth
-    before_edit_message = s + " " + n + " " + d
-    after_edit_message = input_change_surname + " " + input_change_name + " " + input_change_default_date_of_birth
-    data_logging("Редактирование пользоватля", account_number_for_editing, before_edit_message, after_edit_message)
-    print(" ")
+                        q['date_of_birth'] = input_change_default_date_of_birth
+                        
+                        before_edit_message = s + " " + n + " " + d
+                        after_edit_message = input_change_surname + " " + input_change_name + " " + input_change_default_date_of_birth
+                        data_logging("Редактирование пользователя", account_number_for_editing, before_edit_message, after_edit_message)
+                        print(" ")
 
 def debugger(): #отлодчик_666
     '''
