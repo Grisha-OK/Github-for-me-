@@ -6,7 +6,7 @@ import json    #Добавляем модуль json
 #пишет меню
 def data_logging(type_of_transaction, account_number_for_logging, what_happened ,what_changed):
     calendar_date = time.strftime("%Y-%m-%d %H:%M")
-    log_stor = (f"{calendar_date} Тип операции: {type_of_transaction} Номер счета: {account_number_for_logging}, Что было: {what_happened}, Что изменилось: {what_changed}.  ")
+    log_stor = (f"{calendar_date}, Тип операции: {type_of_transaction}, Номер счета: {account_number_for_logging}, Что было: {what_happened}, Что изменилось: {what_changed}.  ")
     with open("transaction.log", "a", encoding='utf8') as write_file: #открывает фаил (transaction.log) только в пределах каструкции with open, в режиме бодавления "a", и помещяет содержимое а переменную(write_file)
         write_file.write(log_stor) #.encode("utf-8"))
 
@@ -67,11 +67,10 @@ def conduct_an_operation_with_an_account():
     print(" ")
     
     if float(account_balance_input) >= 0:
-        D_C_message = "Дебит("
+        D_C_message = "Дебит"
     else:
-        D_C_message = "Кредит("
-    account_balance_input_D_C = D_C_message + account_balance_input + ")"
-    data_logging("Манипуляция со счётом", account_number_input, account_balance , account_balance_input_D_C)
+        D_C_message = "Кредит"
+    data_logging(D_C_message, account_number_input, account_balance , account_balance_input)
 
 def add_new_user():
     '''
