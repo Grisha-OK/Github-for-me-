@@ -1,4 +1,5 @@
+.vscode/*
+.venv/*
 
 data_base_file.json
-
 transaction.log
