@@ -23,7 +23,7 @@ def menu_show():
     
 #взаимодействие с меню
 def specific_user_output():
-    print("Функцыя под №1 выводит данные по номеру счота.")
+    print("Функция под №1 выводит данные по номеру счёта.")
     print('')
     print ('Ведите номер счета')
     o = input()   # o присваивается введённый текст
@@ -37,7 +37,7 @@ def specific_user_output():
     print(" ")
 
 def all_user_output():
-    print("Функцыя под №2 выводит высех имеющихся пользователей.")
+    print("Функция под №2 выводит всех имеющихся пользователей.")
     print('')
     for q in data_base:   #для каждой q из списка data_base (дословный перевод)
         print (q['surname'], '|',
@@ -48,7 +48,7 @@ def all_user_output():
     print(" ")
 
 def conduct_an_operation_with_an_account():
-    print("Функцыя под №3 производит операции дебит кредит над пользователем, по номеру счота.")    
+    print("Функция под №3 производит операции дебит кредит над пользователем, по номеру счёта.")    
     print('')
     print ('Ведите номер счета')
     account_number_input = input() #просим ползователя вести номер счета
@@ -69,7 +69,7 @@ def conduct_an_operation_with_an_account():
     print(" ")
 
 def add_new_user():
-    print("Функцыя под №4 добавляет нового пользователя.")    
+    print("Функция под №4 добавляет нового пользователя.")    
     print('')
     print('Ведите фамилию')
     s = input()
@@ -102,7 +102,7 @@ def add_new_user():
     data_logging("Добавление пользователя", number_ac, "", add_message)
 
 def delete_user():
-    print("Функцыя под №5 удоляет пользователя по номеру счота.")    
+    print("Функция под №5 удаляет пользователя по номеру счёта.")    
     print('')
     del_index = None
     print ('Ведите номер счета для удаления')
@@ -126,7 +126,7 @@ def delete_user():
     data_logging("Удаление пользователя", f, del_message, "")
 
 def exit_the_program():
-    print("Функцыя под №6 выход из программы.")    
+    print("Функция под №6 выход из программы.")    
     print('')
     with open("data_base_file.json", "w") as write_file: #Открываем файл в режиме записи
         json.dump(data_base, write_file)  #Конвертирует данные из переменной data в строку json и записывает в файл
@@ -135,7 +135,7 @@ def exit_the_program():
     exit(0)
 
 def user_edit():
-    print("Функцыя под №7 редактирует пользователя по номеру счота.")
+    print("Функция под №7 редактирует пользователя по номеру счёта.")
     print('')
     print("Ведите номер счота:")
     account_number_for_editing = input()
